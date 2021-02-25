@@ -16,16 +16,18 @@ let recognition = new window.SpeechRecognition();
 //start recognition and game 
 recognition.start();
 
-recognition.addEventListener('result', onSpeak());
+recognition.addEventListener('result', onSpeak);
+// recognition.addEventListener('result', onSpeak());
+
 
 function onSpeak (e){
-    const msg = e.result[0][0].transcript;
+    const msg = e.results[0][0].transcript;
     console.log(msg);
-    writeMassage(msg);
+    writeMessage(msg);
     checkNumber(msg);
 }
 
-function writeMassage(msg){
+function writeMessage(msg){
     msgEl.innerHTML = `
     <div> You Said: </div>
     <span class="box">${msg}<span> `;
@@ -40,13 +42,13 @@ function checkNumber(msg){
     }
     //Check if number is in range
     if (num > 100 || num < 1){
-        msgEl.innerHTML += `<div>Your number must between 1-100</div>`;
+        msgEl.innerHTML += `<div>Your number must between 1 and 100</div>`;
         return;
     }
     if(num === radomNum){
         document.body.innerHTML = `
-        <h2> Congrats! You guess the nummber <br><br>
-        it was ${num} </h2>
+        <h2> Congrats!! You guess the nummber! <br><br>
+        It was ${num} </h2>
         <button class="play-again" id="play-again">Play again</button>`;
     }else if (num > radomNum){
         msgEl.innerHTML += `<div>GO LOWER</div>`;
